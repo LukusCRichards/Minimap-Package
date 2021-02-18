@@ -14,15 +14,57 @@ If you've wrote this correctly you should see the minimap camera follow the char
 
         transform.rotation = Quaternion.Euler(90f, [Transform variable's name].eulerAngles.y, 0f);
 
-You should now see the minimap camera rotating with the character. **Note that if you choose to make a public bool that determines whether the camera can rotate or not, if you turn it off, it will stay on the rotation it was set to before it was turned off.
+If you wrote this correctly, you should see the minimap camera rotating with the character. **Note that if you choose to make a public bool that determines whether the camera can rotate or not, if you turn it on, it will stay on the rotation it was set to before it was turned off.
+
+If you want the minimap camera ro return to its position it was set to when it starts turned off, organise it in this (or similar) fashion:
+
+    public bool miniCamCanRotate = false;
+
+    public Transform player;
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        Vector3 newPosition = player.position;
+        newPosition.y = transform.position.y;
+        transform.position = newPosition;
+
+        if(miniCamCanRotate == true)
+        {
+            MinimapRotation();
+        }
+        else
+        {
+            ReturnRotation();
+        }
+    }
+
+    public void MinimapRotation()
+    {
+        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+    }
+
+    public void ReturnRotation()
+    {
+        transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+    }
 
 ## Components that need to be included
 
-
+For the minimap, you need the following: A Camera, a Render Texture, and a UI Canvas.
 
 ## Putting everything together
 
+To start off, create a new Camera GameObject for the minimap and rotate it 90 degrees on the **x axis** so it looks down at the player and change the projection from perspective to **orthographic**, then add the script that makes the camera follow the player. **Make sure to change the size of the projection appropriately**.
 
+Next, right click in the **Assets Folder** and create a Texture Renderer and name it appropriately for the minimap. This is what will make the minimap see what the camera sees. After creating the Render Texture, all you need to do is add the Texture Renderer to the output texture in the camera that's used for the minimap.
+
+By now, you should see what the minimap camera sees on the UI.
+
+If you've done everything accordingly you shouldn't encounter any substantial problems.
 
 ## Things to note
+
+
+## Things you can do to make it look better
 
