@@ -51,20 +51,23 @@ If you want the minimap camera ro return to its position it was set to when it s
 
 ## Components that need to be included
 
-For the minimap, you need the following: A Camera, a Render Texture, and a UI Canvas.
+For the minimap, you need the following: A Camera, a Render Texture, a UI image and a UI Canvas.
 
 ## Putting everything together
 
 To start off, create a new Camera GameObject for the minimap and rotate it 90 degrees on the **x axis** so it looks down at the player and change the projection from perspective to **orthographic**, then add the script that makes the camera follow the player. **Make sure to change the size of the projection appropriately**.
 
-Next, right click in the **Assets Folder** and create a Texture Renderer and name it appropriately for the minimap. This is what will make the minimap see what the camera sees. After creating the Render Texture, all you need to do is add the Texture Renderer to the output texture in the camera that's used for the minimap.
+Next, right click in the **Assets Folder** and create a Texture Renderer and name it appropriately for the minimap. This is what will make the minimap see what the camera sees. After creating the Render Texture, add the Texture Renderer to the Output Texture slot in the camera that's used for the minimap. Add a UI image to the minimap canvas, as that is what will display the visuals in the UI, and then add the same Texture Renderer to the Texture slot in the image component.
 
 By now, you should see what the minimap camera sees on the UI.
 
 If you've done everything accordingly you shouldn't encounter any substantial problems.
 
-## Things to note
-
-
 ## Things you can do to make it look better
+
+If you want to add a 2D image that you think would give a better representation on the map, you can create another canvas and change the render mode to **World Space**. Then you can place that canvas under the world map and create another UI image and place it in that UI Canvas. Then you just need to add a 2D image to it that represent your map.
+
+After you've done that, give the 2D map canvas a layer and name it appropriately. Then select the minimap camera and change the culling mask from everything to the layer you gave the 2D map canvas. Now you should only see the 2D image, even if it's under the map.
+
+## Things to note
 
