@@ -14,7 +14,7 @@ If you've wrote this correctly you should see the minimap camera follow the char
 
         transform.rotation = Quaternion.Euler(90f, [Transform variable's name].eulerAngles.y, 0f);
 
-You should now see the minimap camera rotating with the character.
+You should now see the minimap camera rotating with the character. **Note that if you choose to make a public bool that determines whether the camera can rotate or not, if you turn it off, it will stay on the rotation it was set to before it was turned off.
 
 ## Components that need to be included
 
