@@ -71,3 +71,4 @@ After you've done that, give the 2D map canvas a layer and name it appropriately
 
 ## Things to note
 
+The size of your 2D image and the minimap camera matters, because if you made the map the same size as your whole large map and the minimap camera's size is small, you'll see a very large image of your 2D map and it will not be useful. **So make sure you scale everything appropriately**.
