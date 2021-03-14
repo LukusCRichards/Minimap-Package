@@ -74,13 +74,19 @@ For the minimap, you need the following: A Camera, a Render Texture, a UI image 
 
 ## Putting everything together
 
-To start off, create a new Camera GameObject for the minimap and rotate it 90 degrees on the **x axis** so it looks down at the player and change the projection from perspective to **orthographic**, then add the script that makes the camera follow the player. **Make sure to change the size of the projection appropriately**.
+To start off, create a new Camera GameObject for the minimap and rotate it 90 degrees on the **x axis** so it looks down at the player and change the projection from perspective to **orthographic**, then add the script that makes the minimap camera follow the player. **Make sure to change the size of the projection appropriately**.
 
 Next, right click in the **Assets Folder** and create a Texture Renderer and name it appropriately for the minimap. This is what will make the minimap see what the camera sees. After creating the Render Texture, add the Texture Renderer to the Output Texture slot in the camera that's used for the minimap. Add a UI image to the minimap canvas, as that is what will display the visuals in the UI, and then add the same Texture Renderer to the Texture slot in the image component.
+
+Make sure that both the **MinimapCamRotaion** and **MinimapCam** script components are attatched to the same Camera GameObject that is used for the minimap and assign the corresponding GameObjects in it.
 
 By now, you should see what the minimap camera sees on the UI.
 
 If you've done everything accordingly you shouldn't encounter any substantial problems.
+
+## What to do when finished
+
+Once you've done everything and you have not encountered any errors, you should now be able to rotate the character in the scene view and change whether the camera can 
 
 ## Things you can do to make it look better
 
