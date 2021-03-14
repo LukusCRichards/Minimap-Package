@@ -2,43 +2,60 @@
 
 ## How to write the script
 
+### MinimapCam
+
 When you open up Unity, create a C# script and name it appropriately for the Minimap. After opening the script, **delete** the void Start function but change the void Update function to **void LateUpdate**. Create a public Transform variable and name it appropriately for the camera component as this will be used to **make the minimap camera follow the player**.
 
 In the **void LateUpdate Function** write the following:
 
-        Vector3 newPosition = [Transform variable name].position;
+        Vector3 newPosition = player.position;
         newPosition.y = transform.position.y;
         transform.position = newPosition;
 
-If you've wrote this correctly you should see the minimap camera follow the character when you test it, but it will **not rotate with the character**. If you want it to rotate with the character write the following:
+If you've wrote this correctly you should see the minimap camera follow the character when you test it, but it will **not rotate with the character**. If you want it to rotate with the character write the following for the upcoming **MinimapRotation** method:
 
-        transform.rotation = Quaternion.Euler(90f, [Transform variable's name].eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
 
-If you wrote this correctly, you should see the minimap camera rotating with the character. **Note that if you choose to make a public bool that determines whether the camera can rotate or not, if you turn it on, it will stay on the rotation it was set to before it was turned off.
+If you wrote this correctly, you should see the minimap camera rotating with the character after these next steps. **Note that if you choose to make a public bool that determines whether the camera can rotate or not, if you turn it on, it will stay on the rotation it was set to before it was turned off.
 
-If you want the minimap camera ro return to its position it was set to when it starts turned off, organise it in this (or similar) fashion:
+Next, create a referance to the upcoming **MinimapCamRotation** script and name it appropriately. Then create an Awake method at the top to call the function that will be used to decide whether the Minimap camera will rotate or not. Make sure it looks like this when you're done:
 
-    public bool miniCamCanRotate = false;
+    MinimapCamRotation miniCamRotation;
+        
+    void Awake()
+    {
+        minimapCamRotation = GetComponent<MinimapCamRotation>();
+    }
+
+Make sure the rest of the script looks like this when you're done:
 
     public Transform player;
-
-    // Update is called once per frame
+    
     void LateUpdate()
     {
         Vector3 newPosition = player.position;
         newPosition.y = transform.position.y;
         transform.position = newPosition;
 
-        if(miniCamCanRotate == true)
+        if(minimapCamRotation.miniCamCanRotate == true)
         {
-            MinimapRotation();
+            minimapCamRotation.MinimapRotation();
         }
         else
         {
-            ReturnRotation();
+            MinimapCamRotation.ReturnRotation();
         }
     }
 
+    
+### Minimap Cam Rotation
+
+Now create another script called **MinimapCamRotation** and create a public bool called miniCamCanRotate and set its value to false. then create two **public** void functions called **Minimap Rotation** so the camera can rotate and **Return Rotation** when it's turned off so it faces north.
+
+By now, the MinimapCamRotation script should look something like this:
+
+    public bool miniCamCanRotate = false;
+        
     public void MinimapRotation()
     {
         transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
@@ -48,6 +65,8 @@ If you want the minimap camera ro return to its position it was set to when it s
     {
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
+
+**Remember:** What is written in the **Minimap Rotation** function is what will get the camera to rotate along with the character when it is set to do so.
 
 ## Components that need to be included
 
@@ -72,3 +91,5 @@ After you've done that, give the 2D map canvas a layer and name it appropriately
 ## Things to note
 
 The size of your 2D image and the minimap camera matters, because if you made the map the same size as your whole large map and the minimap camera's size is small, you'll see a very large image of your 2D map and it will not be useful. **So make sure you scale everything appropriately**.
+
+**IMPORTANT:** When referencing variable from other scripts, **always** make sure that you write an Awake method and write the variable name of the script you're refering to in it, because if you don't, **it will not work**.
